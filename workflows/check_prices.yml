@@ -1,0 +1,42 @@
+name: Check SNCF Prices
+
+on:
+  # Exécution automatique 4 fois par jour
+  schedule:
+    - cron: '0 6,12,18,22 * * *'  # À 6h, 12h, 18h et 22h UTC (7h, 13h, 19h, 23h heure française)
+  
+  # Permet de lancer manuellement depuis l'interface GitHub
+  workflow_dispatch:
+
+jobs:
+  check-prices:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+    
+    - name: 📦 Install dependencies
+      run: |
+        pip install -r requirements.txt
+    
+    - name: 🚄 Check SNCF prices
+      env:
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      run: |
+        python src/main.py
+    
+    - name: 📊 Upload logs (optional)
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: price-check-logs
+        path: logs/*.log
+        retention-days: 7
