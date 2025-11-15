@@ -11,6 +11,17 @@
       "flexibility_hours": 3,
       "notes": "Weekend à Lyon - Exemple"
     }
+    {
+      "origin": "Paris",
+      "destination": "Dijon",
+      "outbound_date": "2025-11-20",
+      "outbound_time": "18:50",
+      "return_date": "2025-11-23",
+      "return_time": "13:26",
+      "current_price": 67.00,
+      "flexibility_hours": 3,
+      "notes": "Weekend Goodwill"
+    }
   ],
   "_format_info": {
     "description": "Configuration pour surveiller vos billets SNCF",
