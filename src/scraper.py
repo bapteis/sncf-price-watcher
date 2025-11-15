@@ -3,6 +3,7 @@ import json
 from datetime import datetime, timedelta
 from typing import List, Dict, Optional
 import time
+import random
 
 class SNCFPriceChecker:
     def __init__(self):
@@ -10,14 +11,21 @@ class SNCFPriceChecker:
         self.headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:140.0) Gecko/20100101 Firefox/140.0",
             "Accept": "application/json, text/plain, */*",
-            "Accept-Language": "fr",
+            "Accept-Language": "fr,fr-FR;q=0.9,en;q=0.8",
+            "Accept-Encoding": "gzip, deflate, br",
             "Content-Type": "application/json",
             "x-bff-key": "ah1MPO-izehIHD-QZZ9y88n-kku876",
             "x-client-channel": "web",
             "x-client-app-id": "front-web",
             "x-market-locale": "fr_FR",
+            "x-api-env": "production",
             "Origin": "https://www.sncf-connect.com",
-            "Referer": "https://www.sncf-connect.com/",
+            "Referer": "https://www.sncf-connect.com/home/shop/results/outward",
+            "DNT": "1",
+            "Connection": "keep-alive",
+            "Sec-Fetch-Dest": "empty",
+            "Sec-Fetch-Mode": "cors",
+            "Sec-Fetch-Site": "same-origin",
         }
     
     def search_round_trip(self, origin: str, destination: str, 
@@ -83,6 +91,9 @@ class SNCFPriceChecker:
         }
         
         try:
+            # Délai aléatoire pour paraître plus humain
+            time.sleep(random.uniform(1, 3))
+            
             response = requests.post(
                 self.base_url,
                 headers=self.headers,
@@ -101,6 +112,9 @@ class SNCFPriceChecker:
         
         except requests.exceptions.RequestException as e:
             print(f"❌ Erreur lors de la recherche: {e}")
+            if hasattr(e, 'response') and e.response is not None:
+                print(f"   Code: {e.response.status_code}")
+                print(f"   Réponse: {e.response.text[:200]}")
             return None
         except json.JSONDecodeError as e:
             print(f"❌ Erreur de parsing JSON: {e}")
