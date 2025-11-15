@@ -33,22 +33,28 @@ class TelegramNotifier:
     
     def notify_better_price(self, trip: Dict, new_price: float, savings: float):
         """Envoie une notification pour un meilleur prix trouvé"""
-        message = f"""
-🎉 *MEILLEUR PRIX TROUVÉ !*
+        outbound_date = trip['outbound_date']
+        outbound_time = trip['outbound_time']
+        return_date = trip['return_date']
+        return_time = trip['return_time']
+        origin = trip['origin']
+        destination = trip['destination']
+        current_price = trip['current_price']
+        
+        message = f"""🎉 *MEILLEUR PRIX TROUVÉ !*
 
-🚄 *Trajet:* {trip['origin']} → {trip['destination']}
+🚄 *Trajet:* {origin} → {destination}
 
 📅 *Dates:*
-• Aller: {trip['outbound_date']} à {trip['outbound_time']}
-• Retour: {trip['return_date']} à {trip['return_time']}
+- Aller: {outbound_date} à {outbound_time}
+- Retour: {return_date} à {return_time}
 
 💰 *Prix:*
-• Votre prix actuel: {trip['current_price']}€
-• Nouveau prix: {new_price}€
-• *Économie: {savings:.2f}€* 💸
+- Votre prix actuel: {current_price}€
+- Nouveau prix: {new_price}€
+- *Économie: {savings:.2f}€* 💸
 
-🔗 Allez sur SNCF Connect pour réserver !
-        """.strip()
+🔗 Allez sur SNCF Connect pour réserver !"""
         
         self.send_message(message)
     
@@ -74,14 +80,14 @@ class TelegramNotifier:
     
     def send_daily_summary(self, trips_checked: int, deals_found: int):
         """Envoie un résumé quotidien"""
-        message = f"""
-📊 *Résumé quotidien*
+        deals_text = f"🎉 {deals_found} meilleur(s) prix trouvé(s)" if deals_found > 0 else "😊 Aucun meilleur prix aujourd'hui"
+        
+        message = f"""📊 *Résumé quotidien*
 
 ✅ {trips_checked} trajet(s) vérifiés
-{'🎉 ' + str(deals_found) + ' meilleur(s) prix trouvé(s)' if deals_found > 0 else '😊 Aucun meilleur prix aujourd\'hui'}
+{deals_text}
 
-_Prochaine vérification dans 6h_
-        """.strip()
+_Prochaine vérification dans 6h_"""
         
         self.send_message(message)
 
