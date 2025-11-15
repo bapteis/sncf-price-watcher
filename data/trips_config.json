@@ -1,0 +1,42 @@
+{
+  "trips": [
+    {
+      "origin": "Paris",
+      "destination": "Lyon",
+      "outbound_date": "2025-12-15",
+      "outbound_time": "14:30",
+      "return_date": "2025-12-18",
+      "return_time": "18:00",
+      "current_price": 125.00,
+      "flexibility_hours": 3,
+      "notes": "Weekend à Lyon - Exemple"
+    }
+  ],
+  "_format_info": {
+    "description": "Configuration pour surveiller vos billets SNCF",
+    "instructions": "⚠️ IMPORTANT: Utilisez les noms de VILLES simples, pas les gares complètes",
+    "examples_good": {
+      "paris": "Paris (pas 'PARIS MONTPARNASSE' ou 'Paris Gare de Lyon')",
+      "lyon": "Lyon (pas 'LYON PART DIEU')",
+      "bordeaux": "Bordeaux",
+      "marseille": "Marseille",
+      "lille": "Lille",
+      "nantes": "Nantes",
+      "strasbourg": "Strasbourg",
+      "toulouse": "Toulouse"
+    },
+    "fields": {
+      "origin": "Nom de la ville de départ (ex: 'Paris', 'Lyon')",
+      "destination": "Nom de la ville d'arrivée (ex: 'Bordeaux', 'Marseille')",
+      "outbound_date": "Date de l'aller au format YYYY-MM-DD",
+      "outbound_time": "Heure approximative de départ (HH:MM)",
+      "return_date": "Date du retour au format YYYY-MM-DD",
+      "return_time": "Heure approximative de retour (HH:MM)",
+      "current_price": "Prix que vous avez payé en ALLER SIMPLE (en euros)",
+      "flexibility_hours": "Nombre d'heures avant/après acceptables (ex: 3 = ±3h)",
+      "notes": "Optionnel - vos notes personnelles"
+    },
+    "note_carte_avantage": "Le script recherche automatiquement avec votre carte Avantage Adulte pour bénéficier de la réduction de 30%",
+    "note_prix": "⚠️ Le prix actuel (current_price) doit être le prix de l'ALLER SIMPLE que vous avez payé, pas l'aller-retour total"
+  }
+}
